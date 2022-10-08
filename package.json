@@ -1,0 +1,31 @@
+{
+  "name": "analytics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neptune-mutual-blue/analytics.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neptune-mutual-blue/analytics/issues"
+  },
+  "homepage": "https://github.com/neptune-mutual-blue/analytics#readme",
+  "volta": {
+    "node": "16.13.1",
+    "yarn": "1.22.19"
+  },
+  "dependencies": {
+    "amplitude-js": "^8.21.1",
+    "mixpanel": "^0.17.0",
+    "mixpanel-browser": "^2.45.0"
+  },
+  "devDependencies": {
+    "standard": "^17.0.0"
+  }
+}
