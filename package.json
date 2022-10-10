@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon -r dotenv/config --experimental-specifier-resolution=node ./src/server.js --ignore './.ignored/' . || true",
+    "fix": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -21,11 +23,16 @@
     "yarn": "1.22.19"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^1.5.4",
+    "@amplitude/analytics-node": "^0.5.6",
+    "@amplitude/node": "^1.10.2",
     "amplitude-js": "^8.21.1",
+    "express": "^4.18.1",
     "mixpanel": "^0.17.0",
     "mixpanel-browser": "^2.45.0"
   },
   "devDependencies": {
+    "dotenv": "^16.0.3",
     "standard": "^17.0.0"
   }
 }

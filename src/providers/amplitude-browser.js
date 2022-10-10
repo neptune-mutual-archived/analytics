@@ -1,4 +1,4 @@
-import * as amplitude from '@amplitude/analytics-node'
+import * as amplitude from '@amplitude/analytics-browser'
 
 const events = {
   PREMIUM: 'PREMIUM',
@@ -8,7 +8,7 @@ const events = {
 const init = (option) => {
   option = option || {}
 
-  amplitude.init(process.env.AMPLITUDE_API_KEY, {
+  amplitude.init(process.env.AMPLITUDE_API_KEY, null, {
     // apiEndPoint: 'https://amp.analytics.neptunemutual.com',
     serverZone: amplitude.Types.ServerZone.EU,
     ...option
@@ -16,11 +16,7 @@ const init = (option) => {
 }
 
 const log = (funnel, journey, step, seq, account, event, props) => {
-  init()
-
-  if (account) {
-    amplitude.identify(new amplitude.Identify({ user_id: account }))
-  }
+  init({}, account)
 
   if (props) {
     amplitude.track(event, { funnel, journey, step, seq, ...props })
@@ -36,18 +32,16 @@ const logPremium = (account, coverKey, productKey, dollarValue) => {
   // sequence: 9999
   // event: 'Closed/Won'
 
-  init()
-
-  if (account) {
-    amplitude.identify(new amplitude.Identify({ user_id: account }))
-  }
+  init({}, account)
 
   const productId = productKey ? `${coverKey}/${productKey}` : coverKey
 
-  amplitude.logRevenueV2(new amplitude.Revenue()
+  amplitude.revenue(new amplitude.Revenue()
     .setProductId(productId)
     .setRevenueType(events.PREMIUM)
-    .setPrice(dollarValue))
+    .setPrice(dollarValue)
+    .setQuantity(1)
+  )
 }
 
 const logAddLiquidity = (account, coverKey, productKey, dollarValue) => {
@@ -56,23 +50,18 @@ const logAddLiquidity = (account, coverKey, productKey, dollarValue) => {
   // sequence: 9999
   // event: 'Closed/Won'
 
-  init()
-
-  if (account) {
-    amplitude.identify(new amplitude.Identify({ user_id: account }))
-  }
+  init({}, account)
 
   const productId = productKey ? `${coverKey}/${productKey}` : coverKey
 
-  amplitude.logRevenueV2(new amplitude.Revenue()
+  amplitude.revenue(new amplitude.Revenue()
     .setProductId(productId)
     .setRevenueType(events.LIQUIDITY)
     .setPrice(dollarValue))
 }
 
 const logWalletConnected = (account) => {
-  init()
-  amplitude.identify(new amplitude.Identify({ user_id: account }))
+  init({}, account)
 }
 
 export { log, logAddLiquidity, logPremium, logWalletConnected }

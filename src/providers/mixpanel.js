@@ -8,20 +8,20 @@ const stories = {
 const init = (option) => {
   option = option || {}
 
-  mixpanel.init('a2dbce0e18dfe5f8e74493843ff5c053', null, {
+  mixpanel.init(process.env.MIXPANEL_API_KEY, null, {
     api_host: 'https://mp.analytics.neptunemutual.com',
     ...option
   })
 }
 
-const log = (account, event, props) => {
+const log = (funnel, journey, step, seq, account, event, props) => {
   const track = () => {
     if (props) {
-      mixpanel.track(event, props)
+      mixpanel.track(event, { funnel, journey, step, seq, ...props })
       return
     }
 
-    mixpanel.track(event)
+    mixpanel.track(event, funnel)
   }
 
   if (!account) {
@@ -30,17 +30,19 @@ const log = (account, event, props) => {
   }
 
   mixpanel.alias(account, undefined, () => {
-    track()
+    track(funnel)
   })
 }
 
 const logPremium = (account, coverKey, productKey, dollarValue) => {
+  // funnel: Policy Purchase
   mixpanel.alias(account, undefined, () => {
     mixpanel.track(stories.POLICY_PURCHASED, { account, coverKey, productKey, dollarValue })
   })
 }
 
 const logAddLiquidity = (account, coverKey, productKey, dollarValue) => {
+  // funnel: Liquidity Addition
   mixpanel.alias(account, undefined, () => {
     mixpanel.track(stories.LIQUIDITY_ADDED, { account, coverKey, productKey, dollarValue })
   })
@@ -50,4 +52,4 @@ const logWalletConnected = (account) => {
   mixpanel.alias(account)
 }
 
-export { init, log, logAddLiquidity, logPremium, logWalletConnected }
+export { log, logAddLiquidity, logPremium, logWalletConnected }

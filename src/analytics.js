@@ -7,15 +7,15 @@ export class Analytics {
     try {
       await this.provider.init(options)
     } catch (error) {
-      console.error(error)
+      console.error('Unhandled Error', error)
     }
   }
 
-  async log (account, e, props) {
+  async log (funnel, journey, step, seq, account, e, props) {
     try {
-      await this.provider.log(account, e, props)
+      await this.provider.log(funnel, journey, step, seq, account, e, props)
     } catch (error) {
-      console.error(error)
+      console.error('Unhandled Error', error)
     }
   }
 
