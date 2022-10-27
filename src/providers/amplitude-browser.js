@@ -7,11 +7,16 @@ const events = {
 
 let initialized = false;
 
-const registerUser = (account) => {
-  const identifyObj = new amplitude.Identify();
-  identifyObj.setOnce('account', account);
+const registerUser = (network, account) => {
+  try {
+    const identifyObj = new amplitude.Identify();
+    identifyObj.setOnce('network', network);
+    identifyObj.setOnce('account', account);
 
-  amplitude.identify(identifyObj);
+    amplitude.identify(identifyObj);
+  } catch(e) {
+    console.log(`Error in creating user...`)
+  }
 }
 
 const init = async (option) => {
@@ -31,11 +36,11 @@ const init = async (option) => {
   }
 }
 
-const log = (funnel, journey, step, seq, account, event, props) => {
+const log = (network, funnel, journey, step, seq, account, event, props) => {
   init({}, account)
 
   if (props) {
-    amplitude.track(event, { funnel, journey, step, seq, ...props })
+    amplitude.track(event, { network, funnel, journey, step, seq, ...props })
     return
   }
 
@@ -66,7 +71,7 @@ const logAddLiquidityRevenue = (account, coverKey, productKey, dollarValue) => {
   // sequence: 9999
   // event: 'Closed/Won'
 
-  init();
+  init({}, account);
 
   const productId = productKey ? `${coverKey}/${productKey}` : coverKey
 
@@ -76,12 +81,14 @@ const logAddLiquidityRevenue = (account, coverKey, productKey, dollarValue) => {
     .setPrice(dollarValue))
 }
 
-const logPageLoadWebsite = (pageName = "index") => {
+const logPageLoadWebsite = (network, pageName = "index") => {
   init();
 
   const eventName = "page-load";
+  
   try {
     amplitude.track(eventName, {
+      network,
       pageName,
     });
   } catch (e) {
@@ -89,13 +96,14 @@ const logPageLoadWebsite = (pageName = "index") => {
   }
 };
 
-const logButtonClick = (buttonName, buttonDescription, eventData = {}, type = "click") => {
+const logButtonClick = (network, buttonName, buttonDescription, eventData = {}, type = "click") => {
   init();
 
   const eventName = `${buttonName} click`;
 
   try {
     amplitude.track(eventName, {
+      network,
       buttonName,
       buttonDescription,
       type,
@@ -106,13 +114,14 @@ const logButtonClick = (buttonName, buttonDescription, eventData = {}, type = "c
   }
 };
 
-const logGesture = (name, description, eventData = {}, type = "swipe") => {
+const logGesture = (network, name, description, eventData = {}, type = "swipe") => {
   init();
 
   const eventName = `${name} ${type}`;
 
   try {
     amplitude.track(eventName, {
+      network,
       name,
       description,
       type,
@@ -124,12 +133,14 @@ const logGesture = (name, description, eventData = {}, type = "swipe") => {
 };
 
 
-const logPageLoad = (account = "N/A", path) => {
+const logPageLoad = (network, account = "N/A", path) => {
   init();
 
   const eventName = "page-load";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       path
     });
@@ -138,12 +149,14 @@ const logPageLoad = (account = "N/A", path) => {
   }
 };
 
-const logOpenExternalPage = (account = "N/A", path) => {
+const logOpenExternalPage = (network, account = "N/A", path) => {
   init();
 
   const eventName = "open-external-page";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       path,
     });
@@ -152,12 +165,14 @@ const logOpenExternalPage = (account = "N/A", path) => {
   }
 };
 
-const logOpenConnectionPopup = (account = "N/A") => {
+const logOpenConnectionPopup = (network, account = "N/A") => {
   init();
 
   const eventName = "open-connection-popup";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
     });
   } catch (e) {
@@ -165,12 +180,14 @@ const logOpenConnectionPopup = (account = "N/A") => {
   }
 };
 
-const logCloseConnectionPopup = (account = "N/A") => {
+const logCloseConnectionPopup = (network, account = "N/A") => {
   init();
 
   const eventName = "close-connection-popup";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
     });
   } catch (e) {
@@ -178,13 +195,15 @@ const logCloseConnectionPopup = (account = "N/A") => {
   }
 };
 
-const logWalletConnected = (account) => {
+const logWalletConnected = (network, account) => {
   init();
   registerUser(account);
 
   const eventName = "wallet-connected";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
     });
   } catch (e) {
@@ -192,12 +211,14 @@ const logWalletConnected = (account) => {
   }
 };
 
-const logWalletDisconnected = (account) => {
+const logWalletDisconnected = (network, account) => {
   init();
 
   const eventName = "wallet-disconnected";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
     });
   } catch (e) {
@@ -205,12 +226,14 @@ const logWalletDisconnected = (account) => {
   }
 };
 
-const logViewAccountOnExplorer = (account) => {
+const logViewAccountOnExplorer = (network, account) => {
   init();
 
   const eventName = "view-account-on-explorer";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
     });
   } catch (e) {
@@ -218,12 +241,14 @@ const logViewAccountOnExplorer = (account) => {
   }
 };
 
-const logUnlimitedApprovalToggled = (account, enabled) => {
+const logUnlimitedApprovalToggled = (network, account, enabled) => {
   init();
 
   const eventName = "unlimited-approval-toggled";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       enabled
     });
@@ -232,12 +257,14 @@ const logUnlimitedApprovalToggled = (account, enabled) => {
   }
 };
 
-const logCoverProductsSeach = (account = "N/A", searchTerm) => {
+const logCoverProductsSeach = (network, account = "N/A", searchTerm) => {
   init();
 
   const eventName = "cover-products-search";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       searchTerm
     });
@@ -246,12 +273,14 @@ const logCoverProductsSeach = (account = "N/A", searchTerm) => {
   }
 };
 
-const logCoverProductsSort = (account = "N/A", sortOrder) => {
+const logCoverProductsSort = (network, account = "N/A", sortOrder) => {
   init();
 
   const eventName = "cover-products-sort";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       sortOrder
     });
@@ -260,12 +289,14 @@ const logCoverProductsSort = (account = "N/A", sortOrder) => {
   }
 };
 
-const logCoverProductsViewChanged = (account = "N/A", view) => {
+const logCoverProductsViewChanged = (network, account = "N/A", view) => {
   init();
 
   const eventName = "cover-products-view-changed";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       view
     });
@@ -274,12 +305,14 @@ const logCoverProductsViewChanged = (account = "N/A", view) => {
   }
 };
 
-const logPolicyPurchaseRulesAccepted = (account = "N/A", coverKey, productKey) => {
+const logPolicyPurchaseRulesAccepted = (network, account = "N/A", coverKey, productKey) => {
   init();
 
   const eventName = "policy-purchase-rules-accepted";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       productKey
@@ -289,12 +322,14 @@ const logPolicyPurchaseRulesAccepted = (account = "N/A", coverKey, productKey) =
   }
 };
 
-const logPolicyPurchase = ({ account, coverKey, productKey, coverFee, coverFeeCurrency, protection, protectionCurrency, coveragePeriod, referralCode, tx }) => {
+const logPolicyPurchase = ({ network, account, coverKey, productKey, coverFee, coverFeeCurrency, protection, protectionCurrency, coveragePeriod, referralCode, tx }) => {
   init();
 
   const eventName = "policy-purchased";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       productKey,
@@ -313,12 +348,14 @@ const logPolicyPurchase = ({ account, coverKey, productKey, coverFee, coverFeeCu
   }
 };
 
-const logAddLiquidityRulesAccepted = (account = "N/A", coverKey) => {
+const logAddLiquidityRulesAccepted = (network, account = "N/A", coverKey) => {
   init();
 
   const eventName = "add-liquidity-rules-accepted";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey
     });
@@ -327,12 +364,14 @@ const logAddLiquidityRulesAccepted = (account = "N/A", coverKey) => {
   }
 };
 
-const logAddLiquidity = ({ account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, tx }) => {
+const logAddLiquidity = ({ network, account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, tx }) => {
   init();
 
   const eventName = "liquidity-added";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       details: {
@@ -348,12 +387,14 @@ const logAddLiquidity = ({ account, coverKey, stake, stakeCurrency, liquidity, l
   }
 };
 
-const logRemoveLiquidityModalOpen = (account, coverKey) => {
+const logRemoveLiquidityModalOpen = (network, account, coverKey) => {
   init();
 
   const eventName = "remove-liquidity-modal-open";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
     });
@@ -362,12 +403,14 @@ const logRemoveLiquidityModalOpen = (account, coverKey) => {
   }
 };
 
-const logRemoveLiquidity = ({ account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, exit, tx }) => {
+const logRemoveLiquidity = ({ network, account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, exit, tx }) => {
   init();
 
   const eventName = "liquidity-removed";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       details: {
@@ -384,12 +427,14 @@ const logRemoveLiquidity = ({ account, coverKey, stake, stakeCurrency, liquidity
   }
 };
 
-const logReportIncidentRulesAccepted = (account = "N/A", coverKey, productKey) => {
+const logReportIncidentRulesAccepted = (network, account = "N/A", coverKey, productKey) => {
   init();
 
   const eventName = "report-incident-rules-accepted";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       productKey
@@ -399,12 +444,14 @@ const logReportIncidentRulesAccepted = (account = "N/A", coverKey, productKey) =
   }
 };
 
-const logIncidentReportStakeApproved = (account, coverKey, productKey, stake, tx) => {
+const logIncidentReportStakeApproved = (network, account, coverKey, productKey, stake, tx) => {
   init();
 
   const eventName = "incident-report-stake-approved";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       productKey,
@@ -416,12 +463,14 @@ const logIncidentReportStakeApproved = (account, coverKey, productKey, stake, tx
   }
 };
 
-const logIncidentReported = ({ account, coverKey, productKey, stake, incidentTitle, incidentDescription, incidentProofs, incidentDate, tx }) => {
+const logIncidentReported = ({ network, account, coverKey, productKey, stake, incidentTitle, incidentDescription, incidentProofs, incidentDate, tx }) => {
   init();
 
   const eventName = "incident-reported";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       productKey,
@@ -439,12 +488,14 @@ const logIncidentReported = ({ account, coverKey, productKey, stake, incidentTit
   }
 };
 
-const logIncidentDisputeStakeApproved = (account, coverKey, productKey, stake, tx) => {
+const logIncidentDisputeStakeApproved = (network, account, coverKey, productKey, stake, tx) => {
   init();
 
   const eventName = "incident-dispute-stake-approved";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       productKey,
@@ -456,12 +507,14 @@ const logIncidentDisputeStakeApproved = (account, coverKey, productKey, stake, t
   }
 };
 
-const logIncidentDisputed = ({ account, coverKey, productKey, stake, disputeTitle, disputeDescription, disputeProofs, tx }) => {
+const logIncidentDisputed = ({ network, account, coverKey, productKey, stake, disputeTitle, disputeDescription, disputeProofs, tx }) => {
   init();
 
   const eventName = "incident-disputed";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       productKey,
@@ -478,12 +531,14 @@ const logIncidentDisputed = ({ account, coverKey, productKey, stake, disputeTitl
   }
 };
 
-const logBondLpTokenApproval = (account, lpTokenAmount, tx) => {
+const logBondLpTokenApproval = (network, account, lpTokenAmount, tx) => {
   init();
 
   const eventName = "bond-lp-token-approved";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       lpTokenAmount,
       tx
@@ -493,12 +548,14 @@ const logBondLpTokenApproval = (account, lpTokenAmount, tx) => {
   }
 };
 
-const logBondCreated = (account, lpTokenAmount, receiveAmount, tx) => {
+const logBondCreated = (network, account, lpTokenAmount, receiveAmount, tx) => {
   init();
 
   const eventName = "bond-created";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       lpTokenAmount,
       receiveAmount,
@@ -509,12 +566,14 @@ const logBondCreated = (account, lpTokenAmount, receiveAmount, tx) => {
   }
 };
 
-const logBondClaimed = (account, tx) => {
+const logBondClaimed = (network, account, tx) => {
   init();
 
   const eventName = "bond-claimed";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       tx
     });
@@ -523,12 +582,14 @@ const logBondClaimed = (account, tx) => {
   }
 };
 
-const logCoverProductRulesDownload = (account = "N/A", coverKey, productKey) => {
+const logCoverProductRulesDownload = (network, account = "N/A", coverKey, productKey) => {
   init();
 
   const eventName = "cover-product-rules-downloaded";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       coverKey,
       productKey
@@ -538,12 +599,14 @@ const logCoverProductRulesDownload = (account = "N/A", coverKey, productKey) => 
   }
 };
 
-const logStakingPoolDepositPopupToggled = (account, poolKey, opened) => {
+const logStakingPoolDepositPopupToggled = (network, account, poolKey, opened) => {
   init();
 
   const eventName = "staking-pool-deposit-popup-toggled";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       poolKey,
       opened
@@ -553,12 +616,14 @@ const logStakingPoolDepositPopupToggled = (account, poolKey, opened) => {
   }
 };
 
-const logStakingPoolDeposit = (account, poolKey, stake, stakeCurrency, tx) => {
+const logStakingPoolDeposit = (network, account, poolKey, stake, stakeCurrency, tx) => {
   init();
 
   const eventName = "staking-pool-deposited";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       poolKey,
       stake,
@@ -570,12 +635,14 @@ const logStakingPoolDeposit = (account, poolKey, stake, stakeCurrency, tx) => {
   }
 };
 
-const logStakingPoolCollectPopupToggled = (account, poolKey, opened) => {
+const logStakingPoolCollectPopupToggled = (network, account, poolKey, opened) => {
   init();
 
   const eventName = "staking-pool-collect-popup-toggled";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       poolKey,
       opened
@@ -585,12 +652,14 @@ const logStakingPoolCollectPopupToggled = (account, poolKey, opened) => {
   }
 };
 
-const logStakingPoolWithdraw = (account, poolKey, stake, stakeCurrency, tx) => {
+const logStakingPoolWithdraw = (network, account, poolKey, stake, stakeCurrency, tx) => {
   init();
 
   const eventName = "staking-pool-withdrawn";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       poolKey,
       details: {
@@ -604,12 +673,14 @@ const logStakingPoolWithdraw = (account, poolKey, stake, stakeCurrency, tx) => {
   }
 };
 
-const logStakingPoolWithdrawRewards = (account, poolKey, tx) => {
+const logStakingPoolWithdrawRewards = (network, account, poolKey, tx) => {
   init();
 
   const eventName = "staking-pool-rewards-withdrawn";
+  
   try {
     amplitude.track(eventName, {
+      network,
       account,
       poolKey,
       tx

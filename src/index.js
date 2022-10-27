@@ -4,153 +4,301 @@ import * as provider from './providers/amplitude-browser'
 
 const a = new Analytics(provider);
 
-const log = async (funnel, journey, step, seq, account, event, props) => {
-  await a.log(funnel, journey, step, seq, account, event, props)
+const log = async (network, funnel, journey, step, seq, account, event, props) => {
+  try {
+    await a.log(network, funnel, journey, step, seq, account, event, props)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logPremium = async (account, coverKey, productKey, dollarValue) => {
+const logPremium = async (network, account, coverKey, productKey, dollarValue) => {
   // funnel: Policy Purchase
-  await a.logPremium(account, coverKey, productKey, dollarValue)
+  try {
+    await network, a.logPremium(account, coverKey, productKey, dollarValue)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logAddLiquidityRevenue = async (account, coverKey, productKey, dollarValue) => {
-  await a.logAddLiquidityRevenue(account, coverKey, productKey, dollarValue)
+const logAddLiquidityRevenue = async (network, account, coverKey, productKey, dollarValue) => {
+  try {
+    await a.logAddLiquidityRevenue(network, account, coverKey, productKey, dollarValue)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logPageLoadWebsite = async (pageName = "index") => {
-  await a.logPageLoadWebsite(pageName)
+const logPageLoadWebsite = async (network, pageName = "index") => {
+  try {
+    await a.logPageLoadWebsite(network, pageName)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logButtonClick = async (buttonName, buttonDescription, eventData = {}, type = "click") => {
-  await a.logButtonClick(buttonName, buttonDescription, eventData, type)
+const logButtonClick = async (network, buttonName, buttonDescription, eventData = {}, type = "click") => {
+  try {
+    await a.logButtonClick(network, buttonName, buttonDescription, eventData, type)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logGesture = async (name, description, eventData = {}, type = "swipe") => {
-  await a.logGesture(name, description, eventData, type)
+const logGesture = async (network, name, description, eventData = {}, type = "swipe") => {
+  try {
+    await a.logGesture(network, name, description, eventData, type)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logPageLoad = async (account = "N/A", path) => {
-  await a.logPageLoad(account , path)
+const logPageLoad = async (network, account = "N/A", path) => {
+  try {
+    await a.logPageLoad(network, account , path)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logOpenExternalPage = async (account = "N/A", path) => {
-  await a.logOpenExternalPage(account, path)
+const logOpenExternalPage = async (network, account = "N/A", path) => {
+  try {
+    await a.logOpenExternalPage(network, account, path)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logOpenConnectionPopup = async (account = "N/A") => {
-  await a.logOpenConnectionPopup(account)
+const logOpenConnectionPopup = async (network, account = "N/A") => {
+  try {
+    await a.logOpenConnectionPopup(network, account)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logCloseConnectionPopup = async (account = "N/A") => {
-  await a.logCloseConnectionPopup(account)
+const logCloseConnectionPopup = async (network, account = "N/A") => {
+  try {
+    await a.logCloseConnectionPopup(network, account)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logWalletConnected = async (account) => {
-  await a.logWalletConnected(account)
+const logWalletConnected = async (network, account) => {
+  try {
+    await a.logWalletConnected(network, account)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logWalletDisconnected = async (account) => {
-  await a.logWalletDisconnected(account)
+const logWalletDisconnected = async (network, account) => {
+  try {
+    await a.logWalletDisconnected(network, account)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logViewAccountOnExplorer = async (account) => {
-  await a.logViewAccountOnExplorer(account)
+const logViewAccountOnExplorer = async (network, account) => {
+  try {
+    await a.logViewAccountOnExplorer(network, account)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logUnlimitedApprovalToggled = async (account, enabled) => {
-  await a.logUnlimitedApprovalToggled(account, enabled)
+const logUnlimitedApprovalToggled = async (network, account, enabled) => {
+  try {
+    await a.logUnlimitedApprovalToggled(network, account, enabled)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logCoverProductsSeach = async (account = "N/A", searchTerm) => {
-  await a.logCoverProductsSeach(account, searchTerm)
+const logCoverProductsSeach = async (network, account = "N/A", searchTerm) => {
+  try {
+    await a.logCoverProductsSeach(network, account, searchTerm)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logCoverProductsSort = async (account = "N/A", sortOrder) => {
-  await a.logCoverProductsSort(account , sortOrder)
+const logCoverProductsSort = async (network, account = "N/A", sortOrder) => {
+  try {
+    await a.logCoverProductsSort(network, account , sortOrder)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logCoverProductsViewChanged = async (account = "N/A", view) => {
-  await a.logCoverProductsViewChanged(account, view)
+const logCoverProductsViewChanged = async (network, account = "N/A", view) => {
+  try {
+    await a.logCoverProductsViewChanged(network, account, view)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logPolicyPurchaseRulesAccepted = async (account = "N/A", coverKey, productKey) => {
-  await a.logPolicyPurchaseRulesAccepted(account, coverKey, productKey)
+const logPolicyPurchaseRulesAccepted = async (network, account = "N/A", coverKey, productKey) => {
+  try {
+    await a.logPolicyPurchaseRulesAccepted(network, account, coverKey, productKey)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logPolicyPurchase = async ({ account, coverKey, productKey, coverFee, coverFeeCurrency, protection, protectionCurrency, coveragePeriod, referralCode, tx }) => {
-  await a.logPolicyPurchase({ account, coverKey, productKey, coverFee, coverFeeCurrency, protection, protectionCurrency, coveragePeriod, referralCode, tx })
+const logPolicyPurchase = async ({ network, account, coverKey, productKey, coverFee, coverFeeCurrency, protection, protectionCurrency, coveragePeriod, referralCode, tx }) => {
+  try {
+    await a.logPolicyPurchase({ network, account, coverKey, productKey, coverFee, coverFeeCurrency, protection, protectionCurrency, coveragePeriod, referralCode, tx })
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logAddLiquidityRulesAccepted = async (account = "N/A", coverKey) => {
-  await a.logAddLiquidityRulesAccepted(account, coverKey)
+const logAddLiquidityRulesAccepted = async (network, account = "N/A", coverKey) => {
+  try {
+    await a.logAddLiquidityRulesAccepted(network, account, coverKey)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logAddLiquidity = async ({ account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, tx }) => {
-  await a.logAddLiquidity({ account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, tx })
+const logAddLiquidity = async ({ network, account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, tx }) => {
+  try {
+    await a.logAddLiquidity({ network, account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, tx })
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logRemoveLiquidityModalOpen = async (account, coverKey) => {
-  await a.logRemoveLiquidityModalOpen(account, coverKey)
+const logRemoveLiquidityModalOpen = async (network, account, coverKey) => {
+  try {
+    await a.logRemoveLiquidityModalOpen(network, account, coverKey)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logRemoveLiquidity = async ({ account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, exit, tx }) => {
-  await a.logRemoveLiquidity({ account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, exit, tx })
+const logRemoveLiquidity = async ({ network, account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, exit, tx }) => {
+  try {
+    await a.logRemoveLiquidity({ network, account, coverKey, stake, stakeCurrency, liquidity, liquidityCurrency, exit, tx })
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logReportIncidentRulesAccepted = async (account = "N/A", coverKey, productKey) => {
-  await a.logReportIncidentRulesAccepted(account, coverKey, productKey)
+const logReportIncidentRulesAccepted = async (network, account = "N/A", coverKey, productKey) => {
+  try {
+    await a.logReportIncidentRulesAccepted(network, account, coverKey, productKey)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logIncidentReportStakeApproved = async (account, coverKey, productKey, stake, tx) => {
-  await a.logIncidentReportStakeApproved(account, coverKey, productKey, stake, tx)
+const logIncidentReportStakeApproved = async (network, account, coverKey, productKey, stake, tx) => {
+  try {
+    await a.logIncidentReportStakeApproved(network, account, coverKey, productKey, stake, tx)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logIncidentReported = async ({ account, coverKey, productKey, stake, incidentTitle, incidentDescription, incidentProofs, incidentDate, tx }) => {
-  await a.logIncidentReported({ account, coverKey, productKey, stake, incidentTitle, incidentDescription, incidentProofs, incidentDate, tx })
+const logIncidentReported = async ({ network, account, coverKey, productKey, stake, incidentTitle, incidentDescription, incidentProofs, incidentDate, tx }) => {
+  try {
+    await a.logIncidentReported({ network, account, coverKey, productKey, stake, incidentTitle, incidentDescription, incidentProofs, incidentDate, tx })
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logIncidentDisputeStakeApproved = async (account, coverKey, productKey, stake, tx) => {
-  await a.logIncidentDisputeStakeApproved(account, coverKey, productKey, stake, tx)
+const logIncidentDisputeStakeApproved = async (network, account, coverKey, productKey, stake, tx) => {
+  try {
+    await a.logIncidentDisputeStakeApproved(network, account, coverKey, productKey, stake, tx)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logIncidentDisputed = async ({ account, coverKey, productKey, stake, disputeTitle, disputeDescription, disputeProofs, tx }) => {
-  await a.logIncidentDisputed({ account, coverKey, productKey, stake, disputeTitle, disputeDescription, disputeProofs, tx })
+const logIncidentDisputed = async ({ network, account, coverKey, productKey, stake, disputeTitle, disputeDescription, disputeProofs, tx }) => {
+  try {
+    await a.logIncidentDisputed({ network, account, coverKey, productKey, stake, disputeTitle, disputeDescription, disputeProofs, tx })
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logBondLpTokenApproval = async (account, lpTokenAmount, tx) => {
-  await a.logBondLpTokenApproval(account, lpTokenAmount, tx)
+const logBondLpTokenApproval = async (network, account, lpTokenAmount, tx) => {
+  try {
+    await a.logBondLpTokenApproval(network, account, lpTokenAmount, tx)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logBondCreated = async (account, lpTokenAmount, receiveAmount, tx) => {
-  await a.logBondCreated(account, lpTokenAmount, receiveAmount, tx)
+const logBondCreated = async (network, account, lpTokenAmount, receiveAmount, tx) => {
+  try {
+    await a.logBondCreated(network, account, lpTokenAmount, receiveAmount, tx)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logBondClaimed = async (account, tx) => {
-  await a.logBondClaimed(account, tx)
+const logBondClaimed = async (network, account, tx) => {
+  try {
+    await a.logBondClaimed(network, account, tx)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logCoverProductRulesDownload = async (account = "N/A", coverKey, productKey) => {
-  await a.logCoverProductRulesDownload(account, coverKey, productKey)
+const logCoverProductRulesDownload = async (network, account = "N/A", coverKey, productKey) => {
+  try {
+    await a.logCoverProductRulesDownload(network, account, coverKey, productKey)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logStakingPoolDepositPopupToggled = async (account, poolKey, opened) => {
-  await a.logStakingPoolDepositPopupToggled(account, poolKey, opened)
+const logStakingPoolDepositPopupToggled = async (network, account, poolKey, opened) => {
+  try {
+    await a.logStakingPoolDepositPopupToggled(network, account, poolKey, opened)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logStakingPoolDeposit = async (account, poolKey, stake, stakeCurrency, tx) => {
-  await a.logStakingPoolDeposit(account, poolKey, stake, stakeCurrency, tx)
+const logStakingPoolDeposit = async (network, account, poolKey, stake, stakeCurrency, tx) => {
+  try {
+    await a.logStakingPoolDeposit(network, account, poolKey, stake, stakeCurrency, tx)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logStakingPoolCollectPopupToggled = async (account, poolKey, opened) => {
-  await a.logStakingPoolCollectPopupToggled(account, poolKey, opened)
+const logStakingPoolCollectPopupToggled = async (network, account, poolKey, opened) => {
+  try {
+    await a.logStakingPoolCollectPopupToggled(network, account, poolKey, opened)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logStakingPoolWithdraw = async (account, poolKey, stake, stakeCurrency, tx) => {
-  await a.logStakingPoolWithdraw(account, poolKey, stake, stakeCurrency, tx)
+const logStakingPoolWithdraw = async (network, account, poolKey, stake, stakeCurrency, tx) => {
+  try {
+    await a.logStakingPoolWithdraw(network, account, poolKey, stake, stakeCurrency, tx)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
-const logStakingPoolWithdrawRewards = async (account, poolKey, tx) => {
-  await a.logStakingPoolWithdrawRewards(account, poolKey, tx)
+const logStakingPoolWithdrawRewards = async (network, account, poolKey, tx) => {
+  try {
+    await a.logStakingPoolWithdrawRewards(network, account, poolKey, tx)
+  } catch(err) {
+    console.log(`Unhandled Error: ${err}`)
+  }
 }
 
 export { 
